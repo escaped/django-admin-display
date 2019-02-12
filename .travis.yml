@@ -7,7 +7,7 @@ python:
 node_js: '8'
 
 install:
-  - pip install -U tox
+  - pip install -U tox-travis
   - pip install coveralls
 
 script:
