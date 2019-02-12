@@ -1,10 +1,10 @@
 # django-admin-display
 
 ![Version](https://img.shields.io/pypi/v/django-admin-display.svg)
-![Build status](https://travis-ci.org/escaped/django-admin-property.png?branch=master)
-![Coverage](https://coveralls.io/repos/escaped/django-admin-property/badge.png?branch=master)
-![Python Versions](https://img.shields.io/pypi/pyversions/django-admin-property.svg)
-![License](https://img.shields.io/pypi/l/django-admin-property.svg)
+![Build status](https://travis-ci.org/escaped/django-admin-display.png?branch=master)
+![Coverage](https://coveralls.io/repos/escaped/django-admin-display/badge.png?branch=master)
+![Python Versions](https://img.shields.io/pypi/pyversions/django-admin-display.svg)
+![License](https://img.shields.io/pypi/l/django-admin-display.svg)
 
 Simplifies the use of special attributes for the django admin and make mypy happy :)
 
