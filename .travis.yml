@@ -1,14 +1,18 @@
+dist: xenial
+
 language: python
 python:
   - 3.6
+  - 3.7
 node_js: '8'
+
 install:
   - pip install -U tox
   - pip install coveralls
-  - npm install
+
 script:
-  - node_modules/.bin/commitlint-travis
   - tox -r
+
 after_success:
   - coveralls
 

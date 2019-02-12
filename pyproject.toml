@@ -7,7 +7,7 @@ authors = [
 ]
 
 license = "BSD-3-Clause"
-readme = "README.rst"
+readme = "README.md"
 
 documentation = "https://github.com/escaped/django-admin-display/blob/master/README.rst"
 homepage = "https://github.com/escaped/django-admin-display"
