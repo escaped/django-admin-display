@@ -9,7 +9,7 @@ requires_django2 = pytest.mark.skipif(
 )
 
 OPTIONS = [
-    ('admin_order_value', 'radius'),
+    ('admin_order_field', 'radius'),
     ('boolean', True),
     ('empty_value_display', 'Undefined'),
     ('short_description', 'Is big?'),

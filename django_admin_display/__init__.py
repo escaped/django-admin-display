@@ -8,7 +8,7 @@ Func = Callable[[Args], ReturnType]
 
 
 def admin_display(
-    admin_order_value: Optional[str] = None,
+    admin_order_field: Optional[str] = None,
     allow_tags: Optional[bool] = None,  # deprecated in django >= 2.0
     boolean: Optional[bool] = None,
     empty_value_display: Optional[str] = None,
@@ -18,8 +18,8 @@ def admin_display(
 
     """
     def wrapper(func: Func) -> Func:
-        if admin_order_value is not None:
-            setattr(func, 'admin_order_value', admin_order_value)
+        if admin_order_field is not None:
+            setattr(func, 'admin_order_field', admin_order_field)
         if allow_tags is not None:
             if django.VERSION[:2] > (1, 11):
                 raise AttributeError(
