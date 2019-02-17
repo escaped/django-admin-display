@@ -15,7 +15,7 @@ def admin_display(
     short_description: Optional[str] = None,
 ) -> Callable[[Func], Func]:
     """
-
+    Extend method with special attributes for use by the django admin.
     """
     def wrapper(func: Func) -> Func:
         if admin_order_field is not None:
