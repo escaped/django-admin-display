@@ -2,9 +2,9 @@ from typing import Callable, Optional, TypeVar
 
 import django
 
-Args = TypeVar('Args')
 ReturnType = TypeVar('ReturnType')
-Func = Callable[[Args], ReturnType]
+FuncType = Callable[..., ReturnType]
+Func = TypeVar('Func', bound=FuncType)
 
 
 def admin_display(
