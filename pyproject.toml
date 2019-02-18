@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "django-admin-display"
-version = "1.0.0"
-description = "Simplifies the use of special attributes for the django admin."
+version = "1.1.0"
+description = "Simplifies the use of function attributes for the django admin and makes mypy happy"
 authors = [
     "Alexander Frenzel <alex@relatedworks.com>",
 ]
@@ -9,7 +9,7 @@ authors = [
 license = "BSD-3-Clause"
 readme = "README.md"
 
-documentation = "https://github.com/escaped/django-admin-display/blob/master/README.rst"
+documentation = "https://github.com/escaped/django-admin-display/blob/master/README.md"
 homepage = "https://github.com/escaped/django-admin-display"
 repository = "https://github.com/escaped/django-admin-display"
 

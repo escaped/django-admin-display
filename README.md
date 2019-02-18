@@ -6,7 +6,7 @@
 ![Python Versions](https://img.shields.io/pypi/pyversions/django-admin-display.svg)
 ![License](https://img.shields.io/pypi/l/django-admin-display.svg)
 
-Simplifies the use of function attributes (eg. `short_description`) for the ModelAdmin and makes mypy happy :)
+Simplifies the use of function attributes (eg. `short_description`) for the django admin and makes mypy happy :)
 
 
 ## Requirements
