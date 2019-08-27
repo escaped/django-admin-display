@@ -5,6 +5,7 @@
 ![Coverage](https://coveralls.io/repos/escaped/django-admin-display/badge.png?branch=master)
 ![Python Versions](https://img.shields.io/pypi/pyversions/django-admin-display.svg)
 ![License](https://img.shields.io/pypi/l/django-admin-display.svg)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fescaped%2Fdjango-admin-display.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fescaped%2Fdjango-admin-display?ref=badge_shield)
 
 Simplifies the use of function attributes (eg. `short_description`) for the django admin and makes mypy happy :)
 
@@ -140,3 +141,7 @@ You can now run the test suite using
       poetry run pytest
 
 This repository follows the [angular commit conventions](https://github.com/marionebl/commitlint/tree/master/@commitlint/config-angular).
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fescaped%2Fdjango-admin-display.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fescaped%2Fdjango-admin-display?ref=badge_large)
