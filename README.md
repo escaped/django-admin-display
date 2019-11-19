@@ -43,8 +43,8 @@ The following example shows, how you normally apply these attributes to an `Admi
 
         def owner(self) -> bool:
             return self.owner.last_name
-        is_valid.short_description = "Company owner"
-        is_valid.admin_order_field = 'owner__last_name'
+        owner.short_description = "Company owner"
+        owner.admin_order_field = 'owner__last_name'
 
 This module replaces the way of defining these attributes by providing a handy decorator.
 
