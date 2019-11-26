@@ -19,7 +19,8 @@ class SampleAdmin(admin.ModelAdmin):
     '''
 
     result = api.run(['-c', code])
-    assert result[0], result
+    _, _, error_code = result
+    assert error_code > 0, result
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
@@ -38,4 +39,5 @@ class SampleAdmin(admin.ModelAdmin):
     '''
 
     result = api.run(['-c', code])
-    assert not result[0], result
+    _, _, error_code = result
+    assert error_code == 0, result
