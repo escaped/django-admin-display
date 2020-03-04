@@ -38,29 +38,32 @@ Supported values are
 
 The following example shows, how you normally apply these attributes to an `AdminModel` or a `Model` method.
 
-    class Company(models.Model):
-        ...
+```python
+class Company(models.Model):
+    ...
 
-        def owner(self) -> bool:
-            return self.owner.last_name
-        owner.short_description = "Company owner"
-        owner.admin_order_field = 'owner__last_name'
+    def owner(self) -> bool:
+        return self.owner.last_name
+    owner.short_description = "Company owner"
+    owner.admin_order_field = 'owner__last_name'
+```
 
 This module replaces the way of defining these attributes by providing a handy decorator.
 
-    from django_admin_display import admin_display
+```python
+from django_admin_display import admin_display
 
 
-    class Company(models.Model):
-        ...
+class Company(models.Model):
+    ...
 
-        @admin_display(
-            short_description="Company owner",
-            admin_order_field='owner__last_name',
-        )
-        def owner(self) -> bool:
-            return self.owner.last_name
-
+    @admin_display(
+        short_description="Company owner",
+        admin_order_field='owner__last_name',
+    )
+    def owner(self) -> bool:
+        return self.owner.last_name
+```
 
 ## Why?
 
@@ -70,39 +73,45 @@ There are mainly two reasons why this module exists.
 
 It is quite common that a calculated model property is displayed in the admin interface:
 
-    class Company(models.Model):
-        ...
+```python
+class Company(models.Model):
+    ...
 
-        @property
-        def created_on(self) -> datetime.date:
-            return self.created_at.date()
+    @property
+    def created_on(self) -> datetime.date:
+        return self.created_at.date()
+```
 
 In order to add special attributes, you have to create a protected method,
-attach the attributes and wrap that method using `property()`
+attach the attributes and wrap that method using `property()`:
 
-    class Company(models.Model):
-        ...
+```python
+class Company(models.Model):
+    ...
 
-        def _created_on(self) -> datetime.date:
-            return self.created_at.date()
-        _created_on.short_description = "Created on"
-        created_on = property(_created_on)
+    def _created_on(self) -> datetime.date:
+        return self.created_at.date()
+    _created_on.short_description = "Created on"
+    created_on = property(_created_on)
+```
 
 This is quite cumbersome, hard to read and most people don't know that this is even possible.
-To overcome these downsides you can achieve the same result using the `@admin_diplay` decorator.
+To overcome these downsides you can achieve the same result using the `@admin_display` decorator:
 
-    from django_admin_display import admin_display
+```python
+from django_admin_display import admin_display
 
 
-    class Company(models.Model):
-        ...
+class Company(models.Model):
+    ...
 
-        @property
-        @admin_display(
-            short_description = "Created on",
-        )
-        def created_on(self) -> datetime.date:
-            return self.created_at.date()
+    @property
+    @admin_display(
+        short_description = "Created on",
+    )
+    def created_on(self) -> datetime.date:
+        return self.created_at.date()
+```
 
 ### mypy
 
@@ -110,14 +119,16 @@ If you are using [mypy](http://mypy-lang.org/), you have probably stumbled over 
 
 > "Callable[[Any, Any], Any]" has no attribute "short_description"
 
-A common solution is to ignore the type checking by adding `# type: ignore` to the end of the line.
+A common solution is to ignore the type checking by adding `# type: ignore` to the end of the line:
 
-    class CompanyAdmin(admin.ModelAdmin):
-        ...
+```python
+class CompanyAdmin(admin.ModelAdmin):
+    ...
 
-        def created_on(self, company: models.Company) -> datetime.date:
-            return company.created_at.date()
-        created_on.short_description = "Created on"  # type: ignore
+    def created_on(self, company: models.Company) -> datetime.date:
+        return company.created_at.date()
+    created_on.short_description = "Created on"  # type: ignore
+```
 
 The issue is already known and heavily discussed on [github](https://github.com/python/mypy/issues/2087).
 
@@ -129,14 +140,18 @@ It is not an optimal solution but works well until the issue has been resolved.
 
 This project is using [poetry](https://poetry.eustace.io/) to manage all
 dev dependencies.
-Clone this repository and run
+Clone this repository and run:
 
-      poetry install
-      poetry run pip install Django
+``` sh
+poetry install
+poetry run pip install Django
+```
 
 to create a virtual environment with all dependencies.
-You can now run the test suite using
+You can now run the test suite using:
 
-      poetry run pytest
+```
+poetry run pytest
+```
 
 This repository follows the [angular commit conventions](https://github.com/marionebl/commitlint/tree/master/@commitlint/config-angular).
