@@ -17,6 +17,7 @@ def admin_display(
     """
     Extend method with special attributes for use by the django admin.
     """
+
     def wrapper(func: Func) -> Func:
         if admin_order_field is not None:
             setattr(func, 'admin_order_field', admin_order_field)

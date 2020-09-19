@@ -144,13 +144,14 @@ Clone this repository and run:
 
 ``` sh
 poetry install
+poetry run pre-commit install
 poetry run pip install Django
 ```
 
 to create a virtual environment with all dependencies.
 You can now run the test suite using:
 
-```
+```sh
 poetry run pytest
 ```
 
