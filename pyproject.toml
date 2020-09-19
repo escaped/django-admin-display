@@ -51,7 +51,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 90
-target-version = ['py36', 'py37', 'py38']
+target-version = ['py36', 'py37', 'py38', 'py39']
 # this repository follows the convention
 #   single quote: internal string
 #   double quotes: user facing string
