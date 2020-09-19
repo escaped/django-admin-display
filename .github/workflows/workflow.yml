@@ -1,7 +1,6 @@
 name: django-admin-display
 
 on: [push]
-
 jobs:
   test:
     name: Test
@@ -25,6 +24,21 @@ jobs:
         run: tox
         env:
           PLATFORM: ${{ matrix.platform }}
+      - name: coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          flag-name: run-${{ matrix.python-version }}
+          parallel: true
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          parallel-finished: true
 
   release:
     name: Create release
