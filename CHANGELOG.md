@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for python 3.8
 - Add support for Django 3.1
 
+### Fixed
+- add py.typed for mypy support
+
 ## [1.1.0] - 18.02.2019
 ### Fixed
 - Fix mypy compatibility
