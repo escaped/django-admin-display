@@ -132,6 +132,7 @@ dev dependencies.
 Clone this repository and run
 
       poetry install
+      poetry run pre-commit install
       poetry run pip install Django
 
 to create a virtual environment with all dependencies.
