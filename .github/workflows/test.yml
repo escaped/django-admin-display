@@ -32,7 +32,7 @@ jobs:
           flag-name: run-${{ matrix.python-version }}
           parallel: true
 
-  finish:
+  coveralls:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
