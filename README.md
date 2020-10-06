@@ -1,19 +1,18 @@
 # django-admin-display
 
-![Version](https://img.shields.io/pypi/v/django-admin-display.svg)
-![Build status](https://travis-ci.org/escaped/django-admin-display.png?branch=master)
-![Coverage](https://coveralls.io/repos/escaped/django-admin-display/badge.png?branch=master)
-![Python Versions](https://img.shields.io/pypi/pyversions/django-admin-display.svg)
-![License](https://img.shields.io/pypi/l/django-admin-display.svg)
+![PyPI](https://img.shields.io/pypi/v/django-admin-display?style=flat-square)
+![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/escaped/django-admin-display/Test%20&%20Lint/master?style=flat-square)
+![Coveralls github branch](https://img.shields.io/coveralls/github/escaped/django-admin-display/master?style=flat-square)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-admin-display?style=flat-square)
+![PyPI - License](https://img.shields.io/pypi/l/django-admin-display?style=flat-square)
+
 
 Simplifies the use of function attributes (eg. `short_description`) for the django admin and makes mypy happy :)
 
-
 ## Requirements
 
-- Python >= 3.6
-- Django >= 1.11
-
+* Python 3.6.1 or newer
+* Django >= 1.11
 
 ## Usage
 
@@ -135,24 +134,38 @@ The issue is already known and heavily discussed on [github](https://github.com/
 This decorator solves the issue by internally using `# type: ignore` and providing a well-defined signature for setting the attributes.
 It is not an optimal solution but works well until the issue has been resolved.
 
-
 ## Development
 
-This project is using [poetry](https://poetry.eustace.io/) to manage all
-dev dependencies.
-Clone this repository and run:
+This project uses [poetry](https://poetry.eustace.io/) for packaging and
+managing all dependencies and [pre-commit](https://pre-commit.com/) to run
+[flake8](http://flake8.pycqa.org/), [isort](https://pycqa.github.io/isort/),
+[mypy](http://mypy-lang.org/) and [black](https://github.com/python/black).
 
-``` sh
+Clone this repository and run
+
+```bash
 poetry install
 poetry run pre-commit install
-poetry run pip install Django
 ```
 
-to create a virtual environment with all dependencies.
-You can now run the test suite using:
+to create a virtual enviroment containing all dependencies.
+Afterwards, you can run the test suite using
 
-```sh
+```bash
 poetry run pytest
 ```
 
-This repository follows the [angular commit conventions](https://github.com/marionebl/commitlint/tree/master/@commitlint/config-angular).
+This repository follows the [Conventional Commits](https://www.conventionalcommits.org/)
+style.
+
+### Cookiecutter template
+
+This project was created using [cruft](https://github.com/cruft/cruft) and the
+[cookiecutter-pyproject](https://github.com/escaped/cookiecutter-pypackage) template.
+In order to update this repository to the latest template version run
+
+```sh
+cruft update
+```
+
+in the root of this repository.
