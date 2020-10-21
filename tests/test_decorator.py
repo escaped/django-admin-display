@@ -1,5 +1,7 @@
 import django
 import pytest
+from django.db.models import F
+from django.db.models.functions import Lower
 
 from django_admin_display import admin_display
 
@@ -9,6 +11,7 @@ requires_django2 = pytest.mark.skipif(
 
 OPTIONS = [
     ('admin_order_field', 'radius'),
+    ('admin_order_field', Lower(F('person_name'))),
     ('boolean', True),
     ('empty_value_display', 'Undefined'),
     ('short_description', 'Is big?'),

@@ -1,6 +1,7 @@
-from typing import Callable, Optional, TypeVar
+from typing import Callable, Optional, TypeVar, Union
 
 import django
+from django.db.models.expressions import BaseExpression
 
 ReturnType = TypeVar('ReturnType')
 FuncType = Callable[..., ReturnType]
@@ -8,7 +9,7 @@ Func = TypeVar('Func', bound=FuncType)
 
 
 def admin_display(
-    admin_order_field: Optional[str] = None,
+    admin_order_field: Optional[Union[str, BaseExpression]] = None,
     allow_tags: Optional[bool] = None,  # deprecated in django >= 2.0
     boolean: Optional[bool] = None,
     empty_value_display: Optional[str] = None,
