@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-admin-display"
-version = "1.2.0"
+version = "1.3.0"
 description = "Simplifies the use of function attributes for the django admin and makes mypy happy"
 authors = [
     "Alexander Frenzel <alex@relatedworks.com>",

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 11.11.2020
+
+### Added
+
+- Support BaseExpression on admin_order_field, @brianhelba
+
 ## [1.2.0] - 19.09.2020
 
 ### Added
@@ -30,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release
 
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/olivierlacan/keep-a-changelog/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/olivierlacan/keep-a-changelog/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/1.1.0
