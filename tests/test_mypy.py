@@ -1,29 +1,16 @@
+import django
 import pytest
-from django.db.models import F, Func
 from mypy import api
 
-from .test_decorator import OPTIONS
-
-
-def safe_repr(value):
-    if isinstance(value, Func):
-        # Django's repr for expressions does not quote string parameters
-        # Copy all expressions, wrapping their value in a "repr"
-        value = value.copy()
-        value.set_source_expressions(
-            [
-                expression.__class__(
-                    repr(
-                        expression.name
-                        if isinstance(expression, F)
-                        else expression.value
-                    )
-                )
-                for expression in value.source_expressions
-            ]
-        )
-
-    return repr(value)
+OPTIONS = [
+    ('admin_order_field', '"radius"'),
+    ('admin_order_field', 'Lower(F("person_name"))'),
+    ('boolean', 'True'),
+    ('empty_value_display', '"Undefined"'),
+    ('short_description', '"Is big?"'),
+]
+if django.VERSION[:2] <= (1, 11):
+    OPTIONS.append(('allow_tags', 'True'))
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
@@ -38,7 +25,7 @@ from django.db.models.functions import Lower
 class SampleAdmin(admin.ModelAdmin):
     def foo(self, obj: models.Model) -> int:
         return 1
-    foo.{attribute} = {safe_repr(value)}
+    foo.{attribute} = {value}
     '''
 
     result = api.run(['-c', code])
@@ -57,7 +44,7 @@ from django.db.models.functions import Lower
 
 
 class SampleAdmin(admin.ModelAdmin):
-    @admin_display({attribute}={safe_repr(value)})
+    @admin_display({attribute}={value})
     def foo(self, obj: models.Model) -> int:
         return 1
     '''
