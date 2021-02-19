@@ -14,6 +14,12 @@ Simplifies the use of function attributes (eg. `short_description`) for the djan
 * Python 3.6.1 or newer
 * Django >= 1.11
 
+## Installation
+
+```sh
+pip install django-admin-display
+```
+
 ## Usage
 
 If you want to change the behaviour of how Django displays a read-only value in the admin interface,
@@ -22,16 +28,16 @@ Supported values are
 
 `short_description`  
     Customize the column’s title of the callable.
-    
+
 `empty_value_display`  
     Show this value instead, if the value of a field is `None`, an empty string, or an iterable without elements.
-    
+
 `admin_order_field`  
     Indicate that the value is represented by a certain database field.
-    
+
 `boolean`  
     Display a pretty “on” or “off” icon if the method returns a boolean.
-    
+
 `allow_tags` (deprecated since Django 1.9)  
     Disable auto-escaping.
 
@@ -140,6 +146,9 @@ This project uses [poetry](https://poetry.eustace.io/) for packaging and
 managing all dependencies and [pre-commit](https://pre-commit.com/) to run
 [flake8](http://flake8.pycqa.org/), [isort](https://pycqa.github.io/isort/),
 [mypy](http://mypy-lang.org/) and [black](https://github.com/python/black).
+
+Additionally, [pdbpp](https://github.com/pdbpp/pdbpp) and [better-exceptions](https://github.com/qix-/better-exceptions) are installed to provide a better debugging experience.
+To enable `better-exceptions` you have to run `export BETTER_EXCEPTIONS=1` in your current session/terminal.
 
 Clone this repository and run
 
