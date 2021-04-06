@@ -25,23 +25,23 @@ pip install django-admin-display
 ## Usage
 
 If you want to change the behaviour of how Django displays a read-only value in the admin interface,
-you can add some [special attributes](>https://docs.djangoproject.com/en/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display) to the corresponding method.
+you can add some [special attributes](https://docs.djangoproject.com/en/stable/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display) to the corresponding method.
 Supported values are
 
-`short_description`  
-    Customize the column’s title of the callable.
+`short_description`
+: Customize the column’s title of the callable.
 
-`empty_value_display`  
-    Show this value instead, if the value of a field is `None`, an empty string, or an iterable without elements.
+`empty_value_display`
+: Show this value instead, if the value of a field is `None`, an empty string, or an iterable without elements.
 
-`admin_order_field`  
-    Indicate that the value is represented by a certain database field.
+`admin_order_field`
+: Indicate that the value is represented by a certain database field.
 
-`boolean`  
-    Display a pretty “on” or “off” icon if the method returns a boolean.
+`boolean`
+: Display a pretty “on” or “off” icon if the method returns a boolean.
 
-`allow_tags` (deprecated since Django 1.9)  
-    Disable auto-escaping.
+`allow_tags` _(Deprecated in Django 1.9, removed in 2.0)_
+: Disable auto-escaping.
 
 The following example shows, how you normally apply these attributes to an `AdminModel` or a `Model` method.
 
@@ -52,7 +52,7 @@ class Company(models.Model):
     def owner(self) -> bool:
         return self.owner.last_name
     owner.short_description = "Company owner"
-    owner.admin_order_field = 'owner__last_name'
+    owner.admin_order_field = "owner__last_name"
 ```
 
 This module replaces the way of defining these attributes by providing a handy decorator.
@@ -66,7 +66,7 @@ class Company(models.Model):
 
     @admin_display(
         short_description="Company owner",
-        admin_order_field='owner__last_name',
+        admin_order_field="owner__last_name",
     )
     def owner(self) -> bool:
         return self.owner.last_name
@@ -114,7 +114,7 @@ class Company(models.Model):
 
     @property
     @admin_display(
-        short_description = "Created on",
+        short_description="Created on",
     )
     def created_on(self) -> datetime.date:
         return self.created_at.date()
@@ -124,7 +124,7 @@ class Company(models.Model):
 
 If you are using [mypy](http://mypy-lang.org/), you have probably stumbled over an error similar to this one
 
-> "Callable[[Any, Any], Any]" has no attribute "short_description"
+> `"Callable[[Any, Any], Any]" has no attribute "short_description"`
 
 A common solution is to ignore the type checking by adding `# type: ignore` to the end of the line:
 
@@ -146,7 +146,7 @@ It is not an optimal solution but works well until the issue has been resolved.
 
 This project uses [poetry](https://poetry.eustace.io/) for packaging and
 managing all dependencies and [pre-commit](https://pre-commit.com/) to run
-[flake8](http://flake8.pycqa.org/), [isort](https://pycqa.github.io/isort/),
+[flake8](https://flake8.pycqa.org/), [isort](https://pycqa.github.io/isort/),
 [mypy](http://mypy-lang.org/) and [black](https://github.com/python/black).
 
 Additionally, [pdbpp](https://github.com/pdbpp/pdbpp) and [better-exceptions](https://github.com/qix-/better-exceptions) are installed to provide a better debugging experience.
@@ -154,7 +154,7 @@ To enable `better-exceptions` you have to run `export BETTER_EXCEPTIONS=1` in yo
 
 Clone this repository and run
 
-```bash
+```sh
 poetry install
 poetry run pre-commit install
 ```
@@ -162,7 +162,7 @@ poetry run pre-commit install
 to create a virtual enviroment containing all dependencies.
 Afterwards, you can run the test suite using
 
-```bash
+```sh
 poetry run pytest
 ```
 

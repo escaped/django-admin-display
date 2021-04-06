@@ -10,7 +10,7 @@ Func = TypeVar('Func', bound=FuncType)
 
 def admin_display(
     admin_order_field: Optional[Union[str, BaseExpression]] = None,
-    allow_tags: Optional[bool] = None,  # deprecated in django >= 2.0
+    allow_tags: Optional[bool] = None,  # Deprecated in Django 1.9, removed in 2.0
     boolean: Optional[bool] = None,
     empty_value_display: Optional[str] = None,
     short_description: Optional[str] = None,
@@ -25,7 +25,7 @@ def admin_display(
         if allow_tags is not None:
             if django.VERSION[:2] > (1, 11):
                 raise AttributeError(
-                    "`allow_tags` is not supported by django > 2.0",
+                    "`allow_tags` is not supported by django >= 2.0",
                 )
             setattr(func, 'allow_tags', allow_tags)
         if boolean is not None:
