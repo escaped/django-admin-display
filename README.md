@@ -9,6 +9,8 @@
 
 Simplifies the use of function attributes (eg. `short_description`) for the django admin and makes mypy happy :)
 
+**Note:** Django 3.2+ has [`@display`](https://docs.djangoproject.com/en/stable/ref/contrib/admin/#the-display-decorator) and [`@action`](https://docs.djangoproject.com/en/stable/ref/contrib/admin/actions/#the-action-decorator) decorators built-in.
+
 ## Requirements
 
 * Python 3.6.1 or newer
