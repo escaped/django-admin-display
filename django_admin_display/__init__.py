@@ -2,6 +2,7 @@ from typing import Callable, Optional, TypeVar, Union
 
 import django
 from django.db.models.expressions import BaseExpression
+from django.utils.safestring import mark_safe
 
 ReturnType = TypeVar('ReturnType')
 FuncType = Callable[..., ReturnType]
@@ -24,10 +25,11 @@ def admin_display(
             setattr(func, 'admin_order_field', admin_order_field)
         if allow_tags is not None:
             if django.VERSION[:2] > (1, 11):
-                raise AttributeError(
-                    "`allow_tags` is not supported by django > 2.0",
-                )
-            setattr(func, 'allow_tags', allow_tags)
+                # in django > 2.0 there is no `allow_tags` option, to still
+                # allow html in the responses we mark the result of a Safe string
+                func = mark_safe(func)
+            else:
+                setattr(func, "allow_tags", allow_tags)
         if boolean is not None:
             setattr(func, 'boolean', boolean)
         if empty_value_display is not None:
