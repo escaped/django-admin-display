@@ -2,6 +2,7 @@ from typing import Callable, Optional, TypeVar, Union
 
 import django
 from django.db.models.expressions import BaseExpression
+from django.utils.safestring import mark_safe
 
 ReturnType = TypeVar('ReturnType')
 FuncType = Callable[..., ReturnType]
