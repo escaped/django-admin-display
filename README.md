@@ -1,7 +1,7 @@
 # django-admin-display
 
 ![PyPI](https://img.shields.io/pypi/v/django-admin-display?style=flat-square)
-![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/escaped/django-admin-display/Test%20&%20Lint/master?style=flat-square)
+![GitHub Workflow Status (master)](https://img.shields.io/github/actions/workflow/status/escaped/django-admin-display/test.yml?branch=master&style=flat-square)
 ![Coveralls github branch](https://img.shields.io/coveralls/github/escaped/django-admin-display/master?style=flat-square)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-admin-display?style=flat-square)
 ![PyPI - License](https://img.shields.io/pypi/l/django-admin-display?style=flat-square)
@@ -13,8 +13,22 @@ Simplifies the use of function attributes (eg. `short_description`) for the djan
 
 ## Requirements
 
-* Python 3.6.1 or newer
-* Django >= 1.11
+* Python 3.10 or newer
+* Django 5.2 or newer
+
+The support range follows the upstream support policies: Django 5.2 is the oldest
+release still receiving security support and Python 3.10 is the oldest Python
+release supported by Django 5.2. See
+[What Python version can I use with Django?](https://docs.djangoproject.com/en/stable/faq/install/#what-python-version-can-i-use-with-django)
+and the [Python version status](https://devguide.python.org/versions/).
+
+| Python | Django         |
+|--------|----------------|
+| 3.10   | 5.2            |
+| 3.11   | 5.2            |
+| 3.12   | 5.2, 6.0, 6.1  |
+| 3.13   | 5.2, 6.0, 6.1  |
+| 3.14   | 5.2, 6.0, 6.1  |
 
 ## Installation
 
@@ -25,7 +39,7 @@ pip install django-admin-display
 ## Usage
 
 If you want to change the behaviour of how Django displays a read-only value in the admin interface,
-you can add some [special attributes](>https://docs.djangoproject.com/en/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display) to the corresponding method.
+you can add some [special attributes](https://docs.djangoproject.com/en/stable/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display) to the corresponding method.
 Supported values are
 
 `short_description`  
@@ -35,13 +49,11 @@ Supported values are
     Show this value instead, if the value of a field is `None`, an empty string, or an iterable without elements.
 
 `admin_order_field`  
-    Indicate that the value is represented by a certain database field.
+    Indicate that the value is represented by a certain database field. This can also be a
+    [query expression](https://docs.djangoproject.com/en/stable/ref/models/expressions/).
 
 `boolean`  
     Display a pretty “on” or “off” icon if the method returns a boolean.
-
-`allow_tags` (deprecated since Django 1.9)  
-    Disable auto-escaping.
 
 The following example shows, how you normally apply these attributes to an `AdminModel` or a `Model` method.
 
@@ -147,39 +159,47 @@ It is not an optimal solution but works well until the issue has been resolved.
 
 ## Development
 
-This project uses [poetry](https://poetry.eustace.io/) for packaging and
-managing all dependencies and [pre-commit](https://pre-commit.com/) to run
-[flake8](http://flake8.pycqa.org/), [isort](https://pycqa.github.io/isort/),
-[mypy](http://mypy-lang.org/) and [black](https://github.com/python/black).
-
-Additionally, [pdbpp](https://github.com/pdbpp/pdbpp) and [better-exceptions](https://github.com/qix-/better-exceptions) are installed to provide a better debugging experience.
-To enable `better-exceptions` you have to run `export BETTER_EXCEPTIONS=1` in your current session/terminal.
+This project uses [uv](https://docs.astral.sh/uv/) for packaging and dependency
+management, [ruff](https://docs.astral.sh/ruff/) for linting and formatting,
+[mypy](https://mypy-lang.org/) for static type checking and
+[pytest](https://docs.pytest.org/) for tests.
 
 Clone this repository and run
 
-```bash
-poetry install
-poetry run pre-commit install
+```sh
+uv sync
 ```
 
-to create a virtual enviroment containing all dependencies.
-Afterwards, you can run the test suite using
+to create a virtual environment containing all dependencies. Afterwards, you can run the test
+suite using
 
-```bash
-poetry run pytest
+```sh
+uv run pytest
+```
+
+The test suite drives a real Django admin project (see `tests/`) end to end: it logs in
+through the admin login form, renders the changelist, follows the sortable column headers
+and submits the add form.
+
+To lint and format the code, run
+
+```sh
+uv run ruff check --fix .
+uv run ruff format .
+```
+
+and to type check the package
+
+```sh
+uv run mypy django_admin_display
+```
+
+[pre-commit](https://pre-commit.com/) hooks are configured to run ruff before every
+commit:
+
+```sh
+uvx pre-commit install
 ```
 
 This repository follows the [Conventional Commits](https://www.conventionalcommits.org/)
 style.
-
-### Cookiecutter template
-
-This project was created using [cruft](https://github.com/cruft/cruft) and the
-[cookiecutter-pyproject](https://github.com/escaped/cookiecutter-pypackage) template.
-In order to update this repository to the latest template version run
-
-```sh
-cruft update
-```
-
-in the root of this repository.
