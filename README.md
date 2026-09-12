@@ -71,19 +71,35 @@ class Company(models.Model):
 This module replaces the way of defining these attributes by providing a handy decorator.
 
 ```python
-from django_admin_display import admin_display
+from django_admin_display import display
 
 
 class Company(models.Model):
     ...
 
-    @admin_display(
-        short_description="Company owner",
-        admin_order_field='owner__last_name',
+    @display(
+        description="Company owner",
+        ordering='owner__last_name',
     )
     def owner(self) -> bool:
         return self.owner.last_name
 ```
+
+The `display` decorator mirrors the parameter names of Django's built-in
+[`django.contrib.admin.display`](https://docs.djangoproject.com/en/stable/ref/contrib/admin/#the-display-decorator)
+and is fully typed, so mypy keeps the decorated method's signature.
+
+| `display`     | sets                  |
+|---------------|-----------------------|
+| `boolean`     | `boolean`             |
+| `ordering`    | `admin_order_field`   |
+| `description` | `short_description`   |
+| `empty_value` | `empty_value_display` |
+
+The older `admin_display` decorator remains available for backwards
+compatibility. It accepts the original parameter names (`boolean`,
+`admin_order_field`, `short_description`, `empty_value_display`) and delegates
+to `display`.
 
 ## Why?
 
@@ -117,18 +133,18 @@ class Company(models.Model):
 ```
 
 This is quite cumbersome, hard to read and most people don't know that this is even possible.
-To overcome these downsides you can achieve the same result using the `@admin_display` decorator:
+To overcome these downsides you can achieve the same result using the `@display` decorator:
 
 ```python
-from django_admin_display import admin_display
+from django_admin_display import display
 
 
 class Company(models.Model):
     ...
 
     @property
-    @admin_display(
-        short_description="Created on",
+    @display(
+        description="Created on",
     )
     def created_on(self) -> datetime.date:
         return self.created_at.date()

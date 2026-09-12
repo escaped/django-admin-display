@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - End-to-end tests that drive the real Django admin UI: login form, changelist
   rendering, sortable column headers and the add form, asserting on DOM and
   database state.
+- The `display` decorator, mirroring the parameter names of Django's built-in
+  `django.contrib.admin.display` (`boolean`, `ordering`, `description`,
+  `empty_value`). It is typed, so the decorated method keeps its signature for
+  mypy.
 
 ### Changed
 
@@ -22,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Migrated packaging and tooling from Poetry, tox, black, isort and flake8 to
   uv, hatchling and ruff. CI now tests the full supported Python × Django
   matrix.
+- `admin_display` now delegates to `display`. Passing both `boolean` and
+  `empty_value_display` raises a `ValueError`, matching Django's built-in
+  decorator, instead of setting both attributes.
 
 ### Removed
 
