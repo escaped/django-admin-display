@@ -1,4 +1,3 @@
-import django
 import pytest
 from mypy import api
 
@@ -9,8 +8,6 @@ OPTIONS = [
     ('empty_value_display', '"Undefined"'),
     ('short_description', '"Is big?"'),
 ]
-if django.VERSION[:2] <= (1, 11):
-    OPTIONS.append(('allow_tags', 'True'))
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
