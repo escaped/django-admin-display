@@ -51,6 +51,7 @@ class Company(models.Model):
 
     def owner(self) -> bool:
         return self.owner.last_name
+
     owner.short_description = "Company owner"
     owner.admin_order_field = 'owner__last_name'
 ```
@@ -98,6 +99,7 @@ class Company(models.Model):
 
     def _created_on(self) -> datetime.date:
         return self.created_at.date()
+
     _created_on.short_description = "Created on"
     created_on = property(_created_on)
 ```
@@ -114,7 +116,7 @@ class Company(models.Model):
 
     @property
     @admin_display(
-        short_description = "Created on",
+        short_description="Created on",
     )
     def created_on(self) -> datetime.date:
         return self.created_at.date()
@@ -134,6 +136,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def created_on(self, company: models.Company) -> datetime.date:
         return company.created_at.date()
+
     created_on.short_description = "Created on"  # type: ignore
 ```
 
