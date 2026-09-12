@@ -25,7 +25,9 @@ jobs:
       - name: Check formatting
         run: uv run --no-sync ruff format --check .
       - name: Typecheck
-        run: uv run --no-sync mypy django_admin_display
+        run: uv run --no-sync mypy django_admin_display tests
+      - name: Smoke-test documented pre-commit workflow
+        run: uvx pre-commit run --all-files
       - name: Build
         run: uv build
       - name: Verify py.typed is packaged
