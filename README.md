@@ -191,7 +191,7 @@ uv run ruff format .
 and to type check the package
 
 ```sh
-uv run mypy django_admin_display
+uv run mypy django_admin_display tests
 ```
 
 [pre-commit](https://pre-commit.com/) hooks are configured to run ruff before every

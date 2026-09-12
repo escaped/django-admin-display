@@ -11,7 +11,7 @@ OPTIONS = [
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
-def test_failure(attribute, value):
+def test_failure(attribute: str, value: str) -> None:
     code = f'''
 from django import admin
 from django.db import models
@@ -31,7 +31,7 @@ class SampleAdmin(admin.ModelAdmin):
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
-def test_success(attribute, value):
+def test_success(attribute: str, value: str) -> None:
     code = f'''
 from django import admin
 from django.db import models

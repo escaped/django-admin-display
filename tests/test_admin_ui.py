@@ -2,6 +2,7 @@ import re
 
 import pytest
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.test import Client
 from django.urls import reverse
 
@@ -12,19 +13,17 @@ pytestmark = pytest.mark.django_db
 CHANGELIST = reverse("admin:testapp_company_changelist")
 
 
-@pytest.fixture
-def admin_user() -> User:
-    return User.objects.create_superuser("admin", "admin@example.com", "password")
-
-
-@pytest.fixture
-def admin_client(client: Client, admin_user: User) -> Client:
-    response = client.post(
+def login(client: Client, next_url: str) -> HttpResponse:
+    return client.post(
         reverse("admin:login"),
-        {"username": "admin", "password": "password", "next": reverse("admin:index")},
+        {"username": "admin", "password": "password", "next": next_url},
         follow=True,
     )
-    assert response.status_code == 200
+
+
+@pytest.fixture
+def form_admin_client(client: Client, admin_user: User) -> Client:
+    assert login(client, reverse("admin:index")).status_code == 200
     return client
 
 
@@ -34,26 +33,22 @@ def header_href(html: str, label: str) -> str:
     return match.group(1)
 
 
-def changelist_rows(html: str) -> str:
+def changelist_tbody(html: str) -> str:
     return html.split("<tbody>")[1].split("</tbody>")[0]
 
 
 def test_login_form_reaches_changelist(client: Client, admin_user: User) -> None:
-    response = client.post(
-        reverse("admin:login"),
-        {"username": "admin", "password": "password", "next": reverse("admin:index")},
-        follow=True,
-    )
+    response = login(client, reverse("admin:index"))
 
     assert response.status_code == 200
     assert "Site administration" in response.content.decode()
 
 
-def test_changelist_renders_decorated_columns(admin_client: Client) -> None:
+def test_changelist_renders_decorated_columns(form_admin_client: Client) -> None:
     Company.objects.create(name="Acme", owner_name="zoe", is_active=True)
     Company.objects.create(name="Globex", owner_name="amy", is_active=False)
 
-    response = admin_client.get(CHANGELIST)
+    response = form_admin_client.get(CHANGELIST)
     html = response.content.decode()
 
     assert response.status_code == 200
@@ -65,7 +60,7 @@ def test_changelist_renders_decorated_columns(admin_client: Client) -> None:
         "Owner (lower)",
     ):
         assert heading in html
-    rows = changelist_rows(html)
+    rows = changelist_tbody(html)
     assert "Acme" in rows
     assert re.search(r'class="field-name_length">4</td>', rows)
     assert "(none)" in rows
@@ -74,15 +69,15 @@ def test_changelist_renders_decorated_columns(admin_client: Client) -> None:
 
 
 def test_clicking_owner_header_orders_by_admin_order_field(
-    admin_client: Client,
+    form_admin_client: Client,
 ) -> None:
     Company.objects.create(name="Acme", owner_name="zoe", is_active=True)
     Company.objects.create(name="Globex", owner_name="amy", is_active=False)
 
-    response = admin_client.get(CHANGELIST)
+    response = form_admin_client.get(CHANGELIST)
     href = header_href(response.content.decode(), "Company owner")
 
-    response = admin_client.get(f"{CHANGELIST}{href}")
+    response = form_admin_client.get(f"{CHANGELIST}{href}")
     html = response.content.decode()
 
     assert response.status_code == 200
@@ -90,7 +85,7 @@ def test_clicking_owner_header_orders_by_admin_order_field(
         "amy",
         "zoe",
     ]
-    rows = changelist_rows(html)
+    rows = changelist_tbody(html)
     assert rows.index("Globex") < rows.index("Acme")
     ordered_names = Company.objects.order_by("owner_name").values_list(
         "name", flat=True
@@ -99,15 +94,15 @@ def test_clicking_owner_header_orders_by_admin_order_field(
 
 
 def test_clicking_expression_header_orders_case_insensitively(
-    admin_client: Client,
+    form_admin_client: Client,
 ) -> None:
     Company.objects.create(name="Acme", owner_name="Zoe", is_active=True)
     Company.objects.create(name="Globex", owner_name="amy", is_active=False)
 
-    response = admin_client.get(CHANGELIST)
+    response = form_admin_client.get(CHANGELIST)
     href = header_href(response.content.decode(), "Owner (lower)")
 
-    response = admin_client.get(f"{CHANGELIST}{href}")
+    response = form_admin_client.get(f"{CHANGELIST}{href}")
 
     assert response.status_code == 200
     assert [company.name for company in response.context["cl"].result_list] == [
@@ -116,8 +111,8 @@ def test_clicking_expression_header_orders_case_insensitively(
     ]
 
 
-def test_add_company_through_admin_form(admin_client: Client) -> None:
-    response = admin_client.post(
+def test_add_company_through_admin_form(form_admin_client: Client) -> None:
+    response = form_admin_client.post(
         reverse("admin:testapp_company_add"),
         {"name": "Initech", "owner_name": "peter", "is_active": "on"},
     )
@@ -125,7 +120,7 @@ def test_add_company_through_admin_form(admin_client: Client) -> None:
     assert response.status_code == 302
     assert response.url == CHANGELIST
 
-    response = admin_client.get(response.url)
+    response = form_admin_client.get(response.url)
 
     assert Company.objects.get().name == "Initech"
     assert "Initech" in response.content.decode()

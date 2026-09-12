@@ -14,18 +14,18 @@ OPTIONS = [
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
-def test_decorator(attribute, value):
-    @admin_display(**{f'{attribute}': value})
-    def noop():
+def test_decorator(attribute: str, value: object) -> None:
+    @admin_display(**{f'{attribute}': value})  # type: ignore[arg-type]
+    def noop() -> None:
         pass
 
     assert hasattr(noop, attribute)
     assert getattr(noop, attribute) == value
 
 
-def test_decorator__allow_tags_removed():
+def test_decorator__allow_tags_removed() -> None:
     with pytest.raises(TypeError):
 
-        @admin_display(allow_tags=True)
-        def noop():
+        @admin_display(allow_tags=True)  # type: ignore[call-arg]
+        def noop() -> None:
             pass
