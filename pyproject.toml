@@ -72,6 +72,7 @@ warn_unused_ignores = true
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
 addopts = [
   "--cov=django_admin_display",
   "--cov-report=term-missing",
