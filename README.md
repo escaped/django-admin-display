@@ -188,7 +188,7 @@ uv run ruff check --fix .
 uv run ruff format .
 ```
 
-and to type check the package
+and to type check the package and tests
 
 ```sh
 uv run mypy django_admin_display tests
