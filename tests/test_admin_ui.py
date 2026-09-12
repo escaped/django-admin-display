@@ -58,6 +58,7 @@ def test_changelist_renders_decorated_columns(form_admin_client: Client) -> None
         "Active",
         "Nickname",
         "Owner (lower)",
+        "Name uppercased",
     ):
         assert heading in html
     rows = changelist_tbody(html)
@@ -108,6 +109,24 @@ def test_clicking_expression_header_orders_case_insensitively(
     assert [company.name for company in response.context["cl"].result_list] == [
         "Globex",
         "Acme",
+    ]
+
+
+def test_clicking_display_decorator_header_orders_by_ordering(
+    form_admin_client: Client,
+) -> None:
+    Company.objects.create(name="Globex", owner_name="amy", is_active=False)
+    Company.objects.create(name="Acme", owner_name="zoe", is_active=True)
+
+    response = form_admin_client.get(CHANGELIST)
+    href = header_href(response.content.decode(), "Name uppercased")
+
+    response = form_admin_client.get(f"{CHANGELIST}{href}")
+
+    assert response.status_code == 200
+    assert [company.name for company in response.context["cl"].result_list] == [
+        "Acme",
+        "Globex",
     ]
 
 

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db.models import F
 from django.db.models.functions import Lower
 
-from django_admin_display import admin_display
+from django_admin_display import admin_display, display
 
 from .models import Company
 
@@ -16,7 +16,12 @@ class CompanyAdmin(admin.ModelAdmin):
         "active_icon",
         "nickname",
         "owner_lower",
+        "name_upper",
     ]
+
+    @display(ordering="name", description="Name uppercased")
+    def name_upper(self, obj: Company) -> str:
+        return obj.name.upper()
 
     @admin_display(boolean=True, short_description="Active")
     def active_icon(self, obj: Company) -> bool:
