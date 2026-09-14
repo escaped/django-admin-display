@@ -1,4 +1,3 @@
-import django
 import pytest
 from mypy import api
 
@@ -9,12 +8,10 @@ OPTIONS = [
     ('empty_value_display', '"Undefined"'),
     ('short_description', '"Is big?"'),
 ]
-if django.VERSION[:2] <= (1, 11):
-    OPTIONS.append(('allow_tags', 'True'))
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
-def test_failure(attribute, value):
+def test_failure(attribute: str, value: str) -> None:
     code = f'''
 from django import admin
 from django.db import models
@@ -34,7 +31,7 @@ class SampleAdmin(admin.ModelAdmin):
 
 
 @pytest.mark.parametrize('attribute, value', OPTIONS)
-def test_success(attribute, value):
+def test_success(attribute: str, value: str) -> None:
     code = f'''
 from django import admin
 from django.db import models
